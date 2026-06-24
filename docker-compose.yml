@@ -1,0 +1,56 @@
+version: "3.8"
+
+services:
+  # RailsアプリケーションサーバーはViewの中でReactを使用
+  web:
+    build: ./docker-config/web
+    container_name: laa-web
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://${db_user}:${db_password}@db:5432/${db_name}
+      - RAILS_ENV=development
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./app:/rails
+      - bundle_cache:/usr/local/bundle
+      - node_modules:/rails/node_modules
+
+  # Webサーバーはnginxを使用
+  nginx:
+    image: nginx:latest
+    container_name: laa-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker-config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker-config/nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - web
+
+  # データベースはPostgreSQLを使用
+  db:
+    image: postgres:16-alpine
+    container_name: laa-db
+    profiles:
+      - dev  # ローカルのみDBはコンテナで動作させる
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${db_user}
+      - POSTGRES_PASSWORD=${db_password}
+      - POSTGRES_DB=${db_name}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+  bundle_cache:
+  node_modules:
