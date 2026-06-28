@@ -3,6 +3,7 @@ FROM ruby:3.3-slim
 RUN apt-get update -qq && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
+    libyaml-dev \
     curl \
     git \
   && rm -rf /var/lib/apt/lists/*
@@ -15,13 +16,10 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 # Yarnのインストール
 RUN npm install -g yarn
 
-# foremanのインストール（RailsサーバーとesbuildをまとめてProcfileで管理）
-RUN gem install foreman
-
-WORKDIR /rails
+WORKDIR /app
 
 COPY entrypoint.sh /usr/bin/entrypoint.sh
-RUN chmod +x /usr/bin/entrypoint.sh
+RUN sed -i 's/\r//' /usr/bin/entrypoint.sh && chmod +x /usr/bin/entrypoint.sh
 
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
