@@ -10,21 +10,30 @@ export default function ImagePreview({ inputName, defaultSrc }: Props) {
   const [isDragging, setIsDragging] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const loadFile = (file: File): void => {
-    if (!file.type.startsWith("image/")) return
+  const showPreview = (file: File): void => {
     const reader = new FileReader()
     reader.onloadend = () => setPreview(reader.result as string)
     reader.readAsDataURL(file)
+  }
 
-    // inputにFileを反映させる（FormDataに乗せるため）
+  // クリックで選ぶ → input の files はブラウザがセット済みなので触らない
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const file = e.target.files?.[0]
+    if (file) showPreview(file)
+  }
+
+  // ドロップ → input に file がないので DataTransfer で注入する
+  const handleDrop = (e: DragEvent<HTMLDivElement>): void => {
+    e.preventDefault()
+    setIsDragging(false)
+    const file = e.dataTransfer.files?.[0]
+    if (!file || !file.type.startsWith("image/")) return
+
     const dt = new DataTransfer()
     dt.items.add(file)
     if (inputRef.current) inputRef.current.files = dt.files
-  }
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const file = e.target.files?.[0]
-    if (file) loadFile(file)
+    showPreview(file)
   }
 
   const handleDragOver = (e: DragEvent<HTMLDivElement>): void => {
@@ -35,13 +44,6 @@ export default function ImagePreview({ inputName, defaultSrc }: Props) {
   const handleDragLeave = (e: DragEvent<HTMLDivElement>): void => {
     e.preventDefault()
     setIsDragging(false)
-  }
-
-  const handleDrop = (e: DragEvent<HTMLDivElement>): void => {
-    e.preventDefault()
-    setIsDragging(false)
-    const file = e.dataTransfer.files?.[0]
-    if (file) loadFile(file)
   }
 
   return (
