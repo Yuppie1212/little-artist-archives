@@ -1,22 +1,15 @@
 <div class="artwork-detail">
 
-  <%# メイン写真 %>
-  <% main_photo = @artwork.photos.first %>
-  <div class="artwork-detail-header">
-    <% if main_photo %>
-      <%= image_tag main_photo, class: "artwork-photo" %>
-    <% else %>
+  <%# スライダー %>
+  <% photo_urls = @artwork.photos.map { |p| url_for(p) } %>
+  <% if photo_urls.any? %>
+    <div class="artwork-detail-header"
+         data-react-photo-slider
+         data-photos="<%= photo_urls.to_json %>">
+    </div>
+  <% else %>
+    <div class="artwork-detail-header">
       <div class="artwork-photo-placeholder">🖌️</div>
-    <% end %>
-  </div>
-
-  <%# サブ写真（2枚目以降） %>
-  <% sub_photos = @artwork.photos.drop(1) %>
-  <% if sub_photos.any? %>
-    <div class="artwork-sub-photos">
-      <% sub_photos.each do |photo| %>
-        <%= image_tag photo, class: "artwork-sub-photo" %>
-      <% end %>
     </div>
   <% end %>
 
