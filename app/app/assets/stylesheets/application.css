@@ -312,7 +312,7 @@ a:hover { opacity: 0.8; }
 .hero-subtitle { font-size: 1rem; color: var(--c-text-muted); font-weight: 600; }
 
 /* ==========================================
-   子供カードグリッド
+   こどもカードグリッド
    ========================================== */
 .children-grid {
   display: grid;
@@ -396,7 +396,7 @@ a:hover { opacity: 0.8; }
 .card-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
 
 /* ==========================================
-   子供プロフィールヘッダー
+   こどもプロフィールヘッダー
    ========================================== */
 .child-profile-header {
   display: flex;

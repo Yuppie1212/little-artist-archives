@@ -1,12 +1,12 @@
 <div class="page-header">
   <h1 class="page-title">🌈 みんなのページ</h1>
-  <%= link_to "＋ 子供を追加する", new_child_path, class: "btn btn-accent" %>
+  <%= link_to "＋ こどもを追加する", new_child_path, class: "btn btn-accent" %>
 </div>
 
 <% if @children.empty? %>
   <div class="empty-state">
     <div class="empty-icon">👶</div>
-    <p>まだ子供が登録されていません。</p>
+    <p>まだこどもが登録されていません。</p>
     <p>さっそく登録してみましょう！</p>
     <%= link_to "登録する", new_child_path, class: "btn btn-primary btn-lg" %>
   </div>
