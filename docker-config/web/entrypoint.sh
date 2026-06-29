@@ -32,6 +32,9 @@ yarn install
 # データベースの作成・マイグレーション
 bundle exec rails db:prepare
 
+# 初回ビルドを同期的に実行（application.jsを確実に生成してからRailsを起動する）
+yarn build
+
 # esbuildウォッチャーをバックグラウンドで起動
 yarn build --watch &
 
