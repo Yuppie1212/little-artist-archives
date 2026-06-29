@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react"
+import { useState, useRef, ChangeEvent, DragEvent } from "react"
 
 interface Props {
   inputName: string
@@ -7,33 +7,76 @@ interface Props {
 
 export default function ImagePreview({ inputName, defaultSrc }: Props) {
   const [preview, setPreview] = useState<string | null>(defaultSrc)
+  const [isDragging, setIsDragging] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const file = e.target.files?.[0]
-    if (!file) return
+  const loadFile = (file: File): void => {
+    if (!file.type.startsWith("image/")) return
     const reader = new FileReader()
     reader.onloadend = () => setPreview(reader.result as string)
     reader.readAsDataURL(file)
+
+    // inputにFileを反映させる（FormDataに乗せるため）
+    const dt = new DataTransfer()
+    dt.items.add(file)
+    if (inputRef.current) inputRef.current.files = dt.files
+  }
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const file = e.target.files?.[0]
+    if (file) loadFile(file)
+  }
+
+  const handleDragOver = (e: DragEvent<HTMLDivElement>): void => {
+    e.preventDefault()
+    setIsDragging(true)
+  }
+
+  const handleDragLeave = (e: DragEvent<HTMLDivElement>): void => {
+    e.preventDefault()
+    setIsDragging(false)
+  }
+
+  const handleDrop = (e: DragEvent<HTMLDivElement>): void => {
+    e.preventDefault()
+    setIsDragging(false)
+    const file = e.dataTransfer.files?.[0]
+    if (file) loadFile(file)
   }
 
   return (
-    <div className="image-preview-wrapper">
-      {preview && (
-        <div className="image-preview-container">
-          <img src={preview} alt="プレビュー" className="image-preview" />
+    <div
+      className={`drop-zone ${isDragging ? "drop-zone--active" : ""} ${preview ? "drop-zone--has-preview" : ""}`}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+      onClick={() => inputRef.current?.click()}
+    >
+      {preview ? (
+        <div className="drop-zone-preview">
+          <img src={preview} alt="プレビュー" className="drop-zone-image" />
+          <div className="drop-zone-overlay">
+            <span className="drop-zone-overlay-icon">📷</span>
+            <span className="drop-zone-overlay-text">クリックまたはドロップで変更</span>
+          </div>
+        </div>
+      ) : (
+        <div className="drop-zone-placeholder">
+          <span className="drop-zone-icon">{isDragging ? "✨" : "📂"}</span>
+          <p className="drop-zone-text">
+            {isDragging ? "ここにドロップ！" : "クリックまたはドラッグ＆ドロップ"}
+          </p>
+          <p className="drop-zone-hint">JPG・PNG・GIF など</p>
         </div>
       )}
-      <label className="image-upload-label">
-        <span className="upload-icon">📷</span>
-        <span>{preview ? "写真を変更する" : "写真を選ぶ"}</span>
-        <input
-          type="file"
-          name={inputName}
-          accept="image/*"
-          onChange={handleChange}
-          className="image-upload-input"
-        />
-      </label>
+      <input
+        ref={inputRef}
+        type="file"
+        name={inputName}
+        accept="image/*"
+        onChange={handleChange}
+        className="drop-zone-input"
+      />
     </div>
   )
 }
