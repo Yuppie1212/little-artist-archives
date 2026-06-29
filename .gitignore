@@ -10,9 +10,11 @@
 /app/log/
 /app/storage/
 /app/public/assets/
-/app/public/builds/
+/app/app/assets/builds/*
+!/app/app/assets/builds/.keep
 /app/config/master.key
 /app/.bundle/
+/app/.kamal/secrets
 
 # ====================
 # JavaScript / Node
@@ -30,5 +32,6 @@ desktop.ini
 # エディタ
 # ====================
 .idea/
+.vscode/
 *.swp
 *.swo

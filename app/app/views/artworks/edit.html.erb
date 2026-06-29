@@ -1,0 +1,11 @@
+<div class="form-container">
+  <h1 class="page-title">✏️ 作品を編集</h1>
+
+  <%= form_with model: [@child, @artwork], class: "form-card", multipart: true do |f| %>
+    <%= render "form", f: f, artwork: @artwork %>
+    <div class="form-actions">
+      <%= f.submit "更新する", class: "btn btn-primary btn-lg" %>
+      <%= link_to "もどる", child_artwork_path(@child, @artwork), class: "btn btn-outline btn-lg" %>
+    </div>
+  <% end %>
+</div>

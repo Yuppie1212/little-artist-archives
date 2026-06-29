@@ -1,0 +1,54 @@
+<div class="child-profile">
+  <div class="child-profile-header">
+    <% if @child.icon.attached? %>
+      <%= image_tag @child.icon, class: "child-avatar-lg" %>
+    <% else %>
+      <div class="child-avatar-placeholder-lg">🧒</div>
+    <% end %>
+    <div>
+      <h1 class="page-title"><%= @child.name %>ちゃんの作品</h1>
+      <p class="child-info"><%= "#{Date.today.year - @child.birthday.year}歳" %> · 作品数 <%= @child.artworks.count %>点</p>
+    </div>
+  </div>
+</div>
+
+<div class="page-header">
+  <h2 class="section-title">🖼️ 作品一覧</h2>
+  <%= link_to "＋ 作品を追加する", new_child_artwork_path(@child), class: "btn btn-accent" %>
+</div>
+
+<% if @artworks.empty? %>
+  <div class="empty-state">
+    <div class="empty-icon">🎨</div>
+    <p>まだ作品が登録されていません。</p>
+    <%= link_to "最初の作品を追加する", new_child_artwork_path(@child), class: "btn btn-primary btn-lg" %>
+  </div>
+<% else %>
+  <div class="artworks-grid">
+    <% @artworks.each do |artwork| %>
+      <div class="artwork-card">
+        <% if artwork.photo.attached? %>
+          <%= link_to child_artwork_path(@child, artwork) do %>
+            <%= image_tag artwork.photo, class: "artwork-thumbnail" %>
+          <% end %>
+        <% else %>
+          <div class="artwork-thumbnail-placeholder">🖌️</div>
+        <% end %>
+        <div class="artwork-info">
+          <h3 class="artwork-title"><%= artwork.title %></h3>
+          <p class="artwork-date"><%= artwork.drawn_at.strftime("%Y年%m月%d日") %></p>
+          <% if artwork.what_drawn.present? %>
+            <p class="artwork-desc">「<%= artwork.what_drawn %>」</p>
+          <% end %>
+        </div>
+        <div class="card-actions">
+          <%= link_to "くわしく見る", child_artwork_path(@child, artwork), class: "btn btn-primary btn-sm" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="back-link">
+  <%= link_to "← みんなのページへ", children_path %>
+</div>
