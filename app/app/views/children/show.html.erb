@@ -27,13 +27,18 @@
   <div class="artworks-grid">
     <% @artworks.each do |artwork| %>
       <div class="artwork-card">
-        <% if artwork.photo.attached? %>
-          <%= link_to child_artwork_path(@child, artwork) do %>
+        <div class="artwork-card-image">
+          <% if artwork.photo.attached? %>
             <%= image_tag artwork.photo, class: "artwork-thumbnail" %>
+          <% else %>
+            <div class="artwork-thumbnail-placeholder">🖌️</div>
           <% end %>
-        <% else %>
-          <div class="artwork-thumbnail-placeholder">🖌️</div>
-        <% end %>
+          <div class="artwork-card-overlay">
+            <p class="artwork-title"><%= artwork.title %></p>
+            <p class="artwork-date"><%= artwork.drawn_at.strftime("%Y年%m月%d日") %></p>
+            <%= link_to "くわしく見る →", child_artwork_path(@child, artwork), class: "btn btn-white btn-sm" %>
+          </div>
+        </div>
         <div class="artwork-info">
           <h3 class="artwork-title"><%= artwork.title %></h3>
           <p class="artwork-date"><%= artwork.drawn_at.strftime("%Y年%m月%d日") %></p>

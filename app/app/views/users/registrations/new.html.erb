@@ -1,53 +1,58 @@
 <div class="auth-container">
   <div class="auth-card">
-    <div class="auth-icon">✨</div>
-    <h1 class="auth-title">新規登録</h1>
+    <span class="auth-icon">🌟</span>
+    <h1 class="auth-title">はじめまして！</h1>
+    <p class="auth-subtitle">アカウントを作って、お子さんの作品をアーカイブしよう！</p>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <% if resource.errors.any? %>
         <div class="error-box">
-          <% resource.errors.full_messages.each do |msg| %>
-            <p>❌ <%= msg %></p>
-          <% end %>
+          <p class="error-box-title">⚠️ 入力内容をご確認ください</p>
+          <ul class="error-box-list">
+            <% resource.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
         </div>
       <% end %>
 
       <div class="form-group">
-        <%= f.label :name, "お名前", class: "form-label" %>
-        <%= f.text_field :name, class: "form-input", placeholder: "山田 太郎" %>
+        <%= f.label :name, "👤 お名前", class: "form-label" %>
+        <%= f.text_field :name, class: "form-input", placeholder: "山田 花子" %>
       </div>
 
       <div class="form-group">
-        <%= f.label :gender, "性別", class: "form-label" %>
+        <%= f.label :gender, "🌈 性別", class: "form-label" %>
         <%= f.select :gender, [["選択しない", "not_specified"], ["男性", "male"], ["女性", "female"], ["その他", "other"]], {}, class: "form-input form-select" %>
       </div>
 
       <div class="form-group">
-        <%= f.label :birthday, "生年月日", class: "form-label" %>
+        <%= f.label :birthday, "🎂 生年月日", class: "form-label" %>
         <%= f.date_field :birthday, class: "form-input" %>
       </div>
 
       <div class="form-group">
-        <%= f.label :email, "メールアドレス", class: "form-label" %>
+        <%= f.label :email, "📧 メールアドレス", class: "form-label" %>
         <%= f.email_field :email, class: "form-input", placeholder: "example@mail.com" %>
       </div>
 
       <div class="form-group">
-        <%= f.label :password, "パスワード（6文字以上）", class: "form-label" %>
-        <%= f.password_field :password, class: "form-input" %>
+        <%= f.label :password, "🔒 パスワード（6文字以上）", class: "form-label" %>
+        <%= f.password_field :password, class: "form-input", placeholder: "パスワードを入力" %>
       </div>
 
       <div class="form-group">
-        <%= f.label :password_confirmation, "パスワード（確認）", class: "form-label" %>
-        <%= f.password_field :password_confirmation, class: "form-input" %>
+        <%= f.label :password_confirmation, "🔒 パスワード（確認）", class: "form-label" %>
+        <%= f.password_field :password_confirmation, class: "form-input", placeholder: "もう一度入力" %>
       </div>
 
       <div class="form-actions">
-        <%= f.submit "登録する", class: "btn btn-accent btn-lg btn-block" %>
+        <%= f.submit "アカウントを作成する", class: "btn btn-accent btn-lg btn-block" %>
       </div>
     <% end %>
 
     <div class="auth-links">
+      <p>すでにアカウントをお持ちですか？</p>
       <%= link_to "ログインはこちら →", new_user_session_path %>
     </div>
   </div>

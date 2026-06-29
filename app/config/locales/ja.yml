@@ -1,0 +1,50 @@
+ja:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "バリデーションに失敗しました: %{errors}"
+        restrict_dependent_destroy:
+          has_one: "%{record}が存在しているので削除できません"
+          has_many: "%{record}が存在しているので削除できません"
+      models:
+        user:
+          attributes:
+            email:
+              blank: "メールアドレスを入力してください"
+              taken: "このメールアドレスはすでに使われています"
+              invalid: "メールアドレスの形式が正しくありません"
+            password:
+              blank: "パスワードを入力してください"
+              too_short: "パスワードは%{count}文字以上にしてください"
+            name:
+              blank: "お名前を入力してください"
+            birthday:
+              blank: "生年月日を入力してください"
+
+  errors:
+    messages:
+      blank: "を入力してください"
+      empty: "を入力してください"
+      invalid: "は正しい形式で入力してください"
+      too_long: "は%{count}文字以内で入力してください"
+      too_short: "は%{count}文字以上で入力してください"
+      wrong_length: "は%{count}文字で入力してください"
+      taken: "はすでに使われています"
+      not_a_number: "は数値で入力してください"
+      not_an_integer: "は整数で入力してください"
+      greater_than: "は%{count}より大きい値にしてください"
+      less_than: "は%{count}より小さい値にしてください"
+      greater_than_or_equal_to: "は%{count}以上の値にしてください"
+      less_than_or_equal_to: "は%{count}以下の値にしてください"
+      inclusion: "は一覧にありません"
+      exclusion: "は使用できません"
+      odd: "は奇数にしてください"
+      even: "は偶数にしてください"
+      confirmation: "と%{attribute}の入力が一致しません"
+      accepted: "を承認してください"
+      present: "は入力しないでください"
+
+  helpers:
+    submit:
+      create: "%{model}を登録する"
+      update: "%{model}を更新する"

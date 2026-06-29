@@ -5,7 +5,7 @@
     "esbuild": "^0.28.1"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets --jsx=automatic --loader:.js=jsx"
+    "build": "esbuild app/javascript/application.tsx --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets --jsx=automatic"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",

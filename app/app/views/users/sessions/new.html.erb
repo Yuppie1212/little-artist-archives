@@ -1,25 +1,27 @@
 <div class="auth-container">
   <div class="auth-card">
-    <div class="auth-icon">🔑</div>
-    <h1 class="auth-title">ログイン</h1>
+    <span class="auth-icon">🎨</span>
+    <h1 class="auth-title">おかえりなさい！</h1>
+    <p class="auth-subtitle">アカウントにログインして、お子さんの作品を見てみましょう。</p>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="form-group">
-        <%= f.label :email, "メールアドレス", class: "form-label" %>
+        <%= f.label :email, "📧 メールアドレス", class: "form-label" %>
         <%= f.email_field :email, autofocus: true, class: "form-input", placeholder: "example@mail.com" %>
       </div>
 
       <div class="form-group">
-        <%= f.label :password, "パスワード", class: "form-label" %>
-        <%= f.password_field :password, class: "form-input" %>
+        <%= f.label :password, "🔒 パスワード", class: "form-label" %>
+        <%= f.password_field :password, class: "form-input", placeholder: "パスワードを入力" %>
       </div>
 
       <div class="form-actions">
-        <%= f.submit "ログイン", class: "btn btn-primary btn-lg btn-block" %>
+        <%= f.submit "ログインする", class: "btn btn-primary btn-lg btn-block" %>
       </div>
     <% end %>
 
     <div class="auth-links">
+      <p>まだアカウントをお持ちでないですか？</p>
       <%= link_to "新規登録はこちら →", new_user_registration_path %>
     </div>
   </div>
