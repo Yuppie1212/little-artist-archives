@@ -15,8 +15,8 @@
 </div>
 
 <div class="form-group">
-  <%= f.label :drawn_at, "描いた日時", class: "form-label" %>
-  <%= f.datetime_local_field :drawn_at, class: "form-input", value: artwork.drawn_at&.strftime("%Y-%m-%dT%H:%M") %>
+  <%= f.label :drawn_at, "描いた日", class: "form-label" %>
+  <%= f.date_field :drawn_at, class: "form-input" %>
 </div>
 
 <div class="form-group">
