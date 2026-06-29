@@ -44,6 +44,6 @@
   <% existing = artwork.photos.map { |p| { signedId: p.blob.signed_id, url: url_for(p) } } %>
   <div data-react-multi-image-upload
        data-input-name="artwork[photos][]"
-       data-existing-photos="<%= existing.to_json.html_safe %>">
+       data-existing-photos="<%= existing.to_json %>">
   </div>
 </div>
