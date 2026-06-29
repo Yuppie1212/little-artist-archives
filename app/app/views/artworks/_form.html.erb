@@ -1,8 +1,11 @@
 <% if artwork.errors.any? %>
   <div class="error-box">
-    <% artwork.errors.full_messages.each do |msg| %>
-      <p>❌ <%= msg %></p>
-    <% end %>
+    <p class="error-box-title">⚠️ 入力内容をご確認ください</p>
+    <ul class="error-box-list">
+      <% artwork.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
   </div>
 <% end %>
 
@@ -37,9 +40,10 @@
 </div>
 
 <div class="form-group">
-  <label class="form-label">作品の写真</label>
-  <div data-react-image-preview
-       data-input-name="artwork[photo]"
-       data-default-src="<%= artwork.photo.attached? ? url_for(artwork.photo) : "" %>">
+  <label class="form-label">🖼️ 作品の写真</label>
+  <% existing = artwork.photos.map { |p| { signedId: p.blob.signed_id, url: url_for(p) } } %>
+  <div data-react-multi-image-upload
+       data-input-name="artwork[photos][]"
+       data-existing-photos="<%= existing.to_json.html_safe %>">
   </div>
 </div>

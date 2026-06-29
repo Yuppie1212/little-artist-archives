@@ -33,8 +33,9 @@
     <% @artworks.each do |artwork| %>
       <div class="artwork-card">
         <div class="artwork-card-image">
-          <% if artwork.photo.attached? %>
-            <%= image_tag artwork.photo, class: "artwork-thumbnail" %>
+          <% main_photo = artwork.photos.first %>
+          <% if main_photo %>
+            <%= image_tag main_photo, class: "artwork-thumbnail" %>
           <% else %>
             <div class="artwork-thumbnail-placeholder">🖌️</div>
           <% end %>

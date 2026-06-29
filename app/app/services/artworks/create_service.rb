@@ -6,9 +6,16 @@ module Artworks
     end
 
     def call
-      artwork = @child.artworks.build(@params.except(:photo))
-      artwork.photo.attach(@params[:photo]) if @params[:photo].present?
+      artwork = @child.artworks.build(@params.except(:photos))
+      attach_photos(artwork, @params[:photos])
       artwork.save ? success(artwork) : failure(artwork)
+    end
+
+    private
+
+    def attach_photos(artwork, photos)
+      return if photos.blank?
+      Array(photos).reject(&:blank?).each { |p| artwork.photos.attach(p) }
     end
   end
 end

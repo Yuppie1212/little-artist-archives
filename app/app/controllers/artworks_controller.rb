@@ -47,6 +47,6 @@ class ArtworksController < ApplicationController
   end
 
   def artwork_params
-    params.require(:artwork).permit(:title, :drawn_at, :what_drawn, :why_drawn, :child_comment, :parent_memo, :photo)
+    params.require(:artwork).permit(:title, :drawn_at, :what_drawn, :why_drawn, :child_comment, :parent_memo, photos: [])
   end
 end

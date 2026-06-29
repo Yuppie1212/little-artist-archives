@@ -752,6 +752,177 @@ a:hover { opacity: 0.8; }
 .drop-zone-input { display: none; }
 
 /* ==========================================
+   複数写真アップロード（MultiImageUpload）
+   ========================================== */
+.multi-upload { display: flex; flex-direction: column; gap: 12px; }
+
+.multi-upload-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* 各写真カード */
+.multi-upload-item {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 2px solid var(--c-border);
+  box-shadow: var(--shadow-xs);
+  cursor: grab;
+  transition: transform 0.2s var(--ease-bounce), box-shadow 0.2s, opacity 0.2s;
+  flex-shrink: 0;
+}
+.multi-upload-item:active { cursor: grabbing; }
+.multi-upload-item--main { border-color: var(--c-pink); box-shadow: var(--shadow-glow-pink); }
+.multi-upload-item--dragging { opacity: 0.4; transform: scale(0.95); }
+.multi-upload-item--drop-target {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-glow-purple);
+  border-color: var(--c-purple);
+}
+.multi-upload-item--uploading { cursor: default; }
+
+.multi-upload-thumb {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+
+/* メインバッジ */
+.multi-upload-badge {
+  position: absolute;
+  top: 6px; left: 6px;
+  background: var(--grad-warm);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: var(--r-full);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  pointer-events: none;
+}
+
+/* 削除ボタン */
+.multi-upload-remove {
+  position: absolute;
+  top: 5px; right: 5px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(26,5,51,0.7);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1;
+  opacity: 0;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.multi-upload-item:hover .multi-upload-remove { opacity: 1; }
+.multi-upload-remove:hover { transform: scale(1.15); background: rgba(248,113,113,0.9); }
+
+/* アップロード進捗 */
+.multi-upload-progress {
+  position: absolute;
+  inset: 0;
+  background: rgba(26,5,51,0.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.multi-upload-progress-bar {
+  width: 80%;
+  height: 5px;
+  background: rgba(255,255,255,0.3);
+  border-radius: var(--r-full);
+  position: relative;
+  overflow: hidden;
+}
+.multi-upload-progress-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--grad-primary);
+  border-radius: var(--r-full);
+  width: var(--w, 0%);
+}
+.multi-upload-progress-text {
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* 追加ゾーン */
+.multi-upload-add {
+  width: 130px; height: 130px;
+  border: 2.5px dashed var(--c-border);
+  border-radius: var(--r-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
+}
+.multi-upload-add:hover {
+  border-color: var(--c-purple);
+  background: var(--c-purple-light);
+  box-shadow: var(--shadow-sm);
+}
+.multi-upload-add--active {
+  border-color: var(--c-pink);
+  background: var(--c-pink-light);
+  box-shadow: var(--shadow-glow-pink);
+}
+.multi-upload-add-icon {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--c-text-muted);
+  line-height: 1;
+}
+.multi-upload-add-text {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--c-text-muted);
+}
+
+/* ヒントテキスト */
+.multi-upload-hint {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--c-text-muted);
+}
+
+/* 作品詳細：サブ写真ギャラリー */
+.artwork-sub-photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.artwork-sub-photo {
+  width: 160px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--c-border);
+  box-shadow: var(--shadow-xs);
+}
+
+@media (max-width: 480px) {
+  .multi-upload-item,
+  .multi-upload-add { width: 100px; height: 100px; }
+  .artwork-sub-photo { width: 120px; height: 90px; }
+}
+
+/* ==========================================
    レスポンシブ — タブレット（～768px）
    ========================================== */
 @media (max-width: 768px) {
