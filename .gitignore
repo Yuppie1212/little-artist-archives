@@ -1,2 +1,34 @@
+# ====================
+# 機密情報
+# ====================
 /.env
+
+# ====================
+# Rails
+# ====================
 /app/tmp/
+/app/log/
+/app/storage/
+/app/public/assets/
+/app/public/builds/
+/app/config/master.key
+/app/.bundle/
+
+# ====================
+# JavaScript / Node
+# ====================
+/app/node_modules/
+
+# ====================
+# OS
+# ====================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ====================
+# エディタ
+# ====================
+.idea/
+*.swp
+*.swo
