@@ -1,0 +1,45 @@
+<% if artwork.errors.any? %>
+  <div class="error-box">
+    <% artwork.errors.full_messages.each do |msg| %>
+      <p>❌ <%= msg %></p>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="form-group">
+  <%= f.label :title, "タイトル", class: "form-label" %>
+  <%= f.text_field :title, class: "form-input", placeholder: "例：おひさまとにじ" %>
+</div>
+
+<div class="form-group">
+  <%= f.label :drawn_at, "描いた日時", class: "form-label" %>
+  <%= f.datetime_local_field :drawn_at, class: "form-input", value: artwork.drawn_at&.strftime("%Y-%m-%dT%H:%M") %>
+</div>
+
+<div class="form-group">
+  <%= f.label :what_drawn, "何を描いたか", class: "form-label" %>
+  <%= f.text_field :what_drawn, class: "form-input", placeholder: "例：おひさまとにじといえ" %>
+</div>
+
+<div class="form-group">
+  <%= f.label :why_drawn, "なぜ描いたか", class: "form-label" %>
+  <%= f.text_area :why_drawn, class: "form-input form-textarea", placeholder: "例：お空がきれいだったから", rows: 3 %>
+</div>
+
+<div class="form-group">
+  <%= f.label :child_comment, "子供のコメント", class: "form-label" %>
+  <%= f.text_area :child_comment, class: "form-input form-textarea", placeholder: "子供が話してくれたこと", rows: 3 %>
+</div>
+
+<div class="form-group">
+  <%= f.label :parent_memo, "親のメモ", class: "form-label" %>
+  <%= f.text_area :parent_memo, class: "form-input form-textarea", placeholder: "親として気づいたことや感じたこと", rows: 3 %>
+</div>
+
+<div class="form-group">
+  <label class="form-label">作品の写真</label>
+  <div data-react-image-preview
+       data-input-name="artwork[photo]"
+       data-default-src="<%= artwork.photo.attached? ? url_for(artwork.photo) : "" %>">
+  </div>
+</div>

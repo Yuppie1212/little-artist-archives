@@ -1,0 +1,53 @@
+<div class="artwork-detail">
+  <div class="artwork-detail-header">
+    <% if @artwork.photo.attached? %>
+      <%= image_tag @artwork.photo, class: "artwork-photo" %>
+    <% else %>
+      <div class="artwork-photo-placeholder">🖌️</div>
+    <% end %>
+  </div>
+
+  <div class="artwork-detail-body">
+    <h1 class="artwork-detail-title">「<%= @artwork.title %>」</h1>
+    <p class="artwork-detail-date">
+      🗓️ <%= @artwork.drawn_at.strftime("%Y年%m月%d日 %H:%M") %>
+      ・ <%= @child.name %>ちゃん作
+    </p>
+
+    <% if @artwork.what_drawn.present? %>
+      <div class="detail-section">
+        <h2 class="detail-label">🖼️ 何を描いたか</h2>
+        <p class="detail-content"><%= @artwork.what_drawn %></p>
+      </div>
+    <% end %>
+
+    <% if @artwork.why_drawn.present? %>
+      <div class="detail-section">
+        <h2 class="detail-label">💭 なぜ描いたか</h2>
+        <p class="detail-content"><%= @artwork.why_drawn %></p>
+      </div>
+    <% end %>
+
+    <% if @artwork.child_comment.present? %>
+      <div class="detail-section detail-section--child">
+        <h2 class="detail-label">💬 <%= @child.name %>ちゃんのコメント</h2>
+        <p class="detail-content"><%= @artwork.child_comment %></p>
+      </div>
+    <% end %>
+
+    <% if @artwork.parent_memo.present? %>
+      <div class="detail-section detail-section--parent">
+        <h2 class="detail-label">📝 親のメモ</h2>
+        <p class="detail-content"><%= @artwork.parent_memo %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="artwork-detail-actions">
+    <%= link_to "✏️ 編集する", edit_child_artwork_path(@child, @artwork), class: "btn btn-primary" %>
+    <%= button_to "🗑️ 削除する", child_artwork_path(@child, @artwork), method: :delete,
+        class: "btn btn-danger",
+        data: { turbo_confirm: "この作品を削除しますか？" } %>
+    <%= link_to "← 作品一覧へ", @child, class: "btn btn-outline" %>
+  </div>
+</div>

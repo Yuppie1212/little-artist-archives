@@ -1,29 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "App" %></title>
+    <title>ちびっこアートアーカイブ</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="App">
-    <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
-
   <body>
-    <%= yield %>
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="<%= root_path %>" class="site-logo">🎨 ちびっこアートアーカイブ</a>
+        <nav class="header-nav">
+          <% if user_signed_in? %>
+            <span class="header-user">こんにちは、<%= current_user.name %>さん！</span>
+            <%= link_to "子供を追加", new_child_path, class: "btn btn-accent" %>
+            <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-outline" %>
+          <% else %>
+            <%= link_to "ログイン", new_user_session_path, class: "btn btn-primary" %>
+            <%= link_to "新規登録", new_user_registration_path, class: "btn btn-accent" %>
+          <% end %>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <% if notice %>
+        <div class="flash flash-notice">🎉 <%= notice %></div>
+      <% end %>
+      <% if alert %>
+        <div class="flash flash-alert">⚠️ <%= alert %></div>
+      <% end %>
+      <%= yield %>
+    </main>
+
+    <footer class="site-footer">
+      <p>🌟 思い出をずっととっておこう 🌟</p>
+    </footer>
   </body>
 </html>

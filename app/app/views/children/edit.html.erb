@@ -1,0 +1,11 @@
+<div class="form-container">
+  <h1 class="page-title">✏️ <%= @child.name %>ちゃんの情報を編集</h1>
+
+  <%= form_with model: @child, class: "form-card", multipart: true do |f| %>
+    <%= render "form", f: f, child: @child %>
+    <div class="form-actions">
+      <%= f.submit "更新する", class: "btn btn-primary btn-lg" %>
+      <%= link_to "もどる", @child, class: "btn btn-outline btn-lg" %>
+    </div>
+  <% end %>
+</div>

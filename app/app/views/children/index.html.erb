@@ -1,0 +1,36 @@
+<div class="page-header">
+  <h1 class="page-title">🌈 みんなのページ</h1>
+  <%= link_to "＋ 子供を追加する", new_child_path, class: "btn btn-accent" %>
+</div>
+
+<% if @children.empty? %>
+  <div class="empty-state">
+    <div class="empty-icon">👶</div>
+    <p>まだ子供が登録されていません。</p>
+    <p>さっそく登録してみましょう！</p>
+    <%= link_to "登録する", new_child_path, class: "btn btn-primary btn-lg" %>
+  </div>
+<% else %>
+  <div class="children-grid">
+    <% @children.each do |child| %>
+      <div class="child-card">
+        <div class="child-icon">
+          <% if child.icon.attached? %>
+            <%= image_tag child.icon, class: "child-avatar" %>
+          <% else %>
+            <div class="child-avatar-placeholder">🧒</div>
+          <% end %>
+        </div>
+        <h2 class="child-name"><%= child.name %></h2>
+        <p class="child-age"><%= "#{Date.today.year - child.birthday.year}歳" %></p>
+        <p class="child-artwork-count">作品数：<%= child.artworks.count %>点</p>
+        <div class="card-actions">
+          <%= link_to "作品を見る", child_path(child), class: "btn btn-primary btn-sm" %>
+          <%= link_to "編集", edit_child_path(child), class: "btn btn-outline btn-sm" %>
+          <%= button_to "削除", child_path(child), method: :delete, class: "btn btn-danger btn-sm",
+              data: { turbo_confirm: "#{child.name}ちゃんの情報をすべて削除しますか？" } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

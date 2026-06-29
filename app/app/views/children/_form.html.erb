@@ -1,0 +1,25 @@
+<% if child.errors.any? %>
+  <div class="error-box">
+    <% child.errors.full_messages.each do |msg| %>
+      <p>❌ <%= msg %></p>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="form-group">
+  <%= f.label :name, "名前", class: "form-label" %>
+  <%= f.text_field :name, class: "form-input", placeholder: "例：花子" %>
+</div>
+
+<div class="form-group">
+  <%= f.label :birthday, "生年月日", class: "form-label" %>
+  <%= f.date_field :birthday, class: "form-input" %>
+</div>
+
+<div class="form-group">
+  <label class="form-label">アイコン写真</label>
+  <div data-react-image-preview
+       data-input-name="child[icon]"
+       data-default-src="<%= child.icon.attached? ? url_for(child.icon) : "" %>">
+  </div>
+</div>
