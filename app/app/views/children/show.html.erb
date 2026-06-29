@@ -7,7 +7,12 @@
     <% end %>
     <div>
       <h1 class="page-title"><%= @child.name %>ちゃんの作品</h1>
-      <p class="child-info"><%= "#{Date.today.year - @child.birthday.year}歳" %> · 作品数 <%= @child.artworks.count %>点</p>
+      <p class="child-info">
+        <%= "#{Date.today.year - @child.birthday.year}歳" %>
+        <% gender_label = { not_specified: nil, male: "男の子", female: "女の子", other: "その他" }[@child.gender.to_sym] %>
+        <%= "· #{gender_label}" if gender_label %>
+        · 作品数 <%= @child.artworks.count %>点
+      </p>
     </div>
   </div>
 </div>

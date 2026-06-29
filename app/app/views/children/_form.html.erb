@@ -17,6 +17,14 @@
 </div>
 
 <div class="form-group">
+  <%= f.label :gender, "性別", class: "form-label" %>
+  <%= f.select :gender,
+        [["選択しない", "not_specified"], ["男の子", "male"], ["女の子", "female"], ["その他", "other"]],
+        {},
+        class: "form-input form-select" %>
+</div>
+
+<div class="form-group">
   <label class="form-label">アイコン写真</label>
   <div data-react-image-preview
        data-input-name="child[icon]"

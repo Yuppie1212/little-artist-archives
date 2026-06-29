@@ -22,7 +22,10 @@
           <% end %>
         </div>
         <h2 class="child-name"><%= child.name %></h2>
-        <p class="child-age"><%= "#{Date.today.year - child.birthday.year}歳" %></p>
+        <p class="child-age">
+          <%= "#{Date.today.year - child.birthday.year}歳" %>
+          <%= { not_specified: "", male: "👦", female: "👧", other: "🧒" }[child.gender.to_sym] %>
+        </p>
         <p class="child-artwork-count">作品数：<%= child.artworks.count %>点</p>
         <div class="card-actions">
           <%= link_to "作品を見る", child_path(child), class: "btn btn-primary btn-sm" %>
