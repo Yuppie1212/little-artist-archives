@@ -20,6 +20,8 @@
 # JavaScript / Node
 # ====================
 /app/node_modules/
+/frontend/node_modules/
+# frontend/dist/ は git 管理する（サーバーでビルドしない）
 
 # ====================
 # OS

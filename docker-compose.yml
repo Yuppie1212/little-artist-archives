@@ -27,6 +27,7 @@ services:
     volumes:
       - ./docker-config/nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./docker-config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend/dist:/usr/share/nginx/html:ro  # React SPA の配信
     depends_on:
       - web
 
